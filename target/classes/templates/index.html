@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Movies</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<span th:replace="fragment_navbar :: navBar"></span>
+
+<div class="header">
+<h1>🎬 Movie Catalog</h1>
+    <a th:href="@{/createMovie}" class="btn">Nueva película</a>
+</div>
+<form class="search-bar" method="get" th:action="@{/}">
+
+    <input type="text" name="title" placeholder="Buscar por título...">
+
+    <select name="genre">
+
+        <option value="">Todos los géneros</option>
+
+        <option th:each="genre : ${genres}"
+                th:value="${genre.id}"
+                th:text="${genre.name}">
+        </option>
+
+    </select>
+
+    <button class="btn">Buscar</button>
+    <button class="btn2">
+        <div class="results-count">
+            <span th:text="${#lists.size(movies)} "></span>
+        </div>
+    </button>
+
+
+</form>
+
+</div>
+
+<div class="movie-grid">
+
+    <div class="movie-card" th:each="movie : ${movies}">
+        <a th:href="@{/movie/{id}(id=${movie.id})}">
+            <img th:src="${movie.urlThumbnail}" th:alt="${movie.title}">
+        </a>
+        <div class="movie-info">
+
+            <h3 th:text="${movie.title}"></h3>
+
+            <div class="genre">
+        <span th:each="g, iter : ${movie.genres}">
+            <span th:text="${g.name}"></span>
+            <span th:if="${!iter.last}"> | </span>
+        </span>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

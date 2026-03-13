@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Nueva Película</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<span th:replace="fragment_navbar :: navBar"></span>
+<h1>Alta de Película</h1>
+
+<div class="form-container">
+
+    <form th:action="@{/createMovie}" th:object="${movie}" method="post">
+
+        <div class="form-group">
+            <label>Título</label>
+            <input type="text" th:field="*{title}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Thumbnail URL</label>
+            <input type="text" th:field="*{urlThumbnail}">
+        </div>
+
+        <div class="form-group">
+            <label>Video URL</label>
+            <input type="text" th:field="*{urlVideo}">
+        </div>
+
+        <div class="form-group">
+            <label>Géneros</label>
+
+            <select multiple th:field="*{genres}" size="5">
+
+                <option th:each="g : ${genres}"
+                        th:value="${g.id}"
+                        th:text="${g.name}">
+                </option>
+
+            </select>
+
+        </div>
+
+        <button class="btn" type="submit">Guardar</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
